@@ -1,15 +1,6 @@
 #!/usr/bin/env bash
 
 
-create_docker_network() {
-    network_found=$(docker network ls  --format '{{.Name}}' --filter name=$network)
-    if [[ ! "$network_found" ]]; then
-        docker network create --driver bridge --subnet=10.1.2.0/24 \
-            -o com.docker.network.bridge.name=br-$network $network
-    fi
-}
-
-
 remove_container_if_not_running() {
     local status=$(docker container inspect -f '{{.State.Status}}' $container 2>/dev/null || echo '')
     if [[ "$status" ]]; then
@@ -52,6 +43,7 @@ wait_for_container_up() {
         return 0
     else
         echo "Container $container not running, status=${status}\n"
+        docker logs --tail 10 $container
         return 1
     fi
 }

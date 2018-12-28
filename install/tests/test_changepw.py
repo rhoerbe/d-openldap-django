@@ -3,9 +3,11 @@
 import os
 from ldap3 import Server, Connection, ALL, LDIF, MODIFY_REPLACE
 
+print('test python/ldap3')
+
 # variables
 rootpw = os.environ['ROOTPW'] if 'ROOTPW' in os.environ else 'changeit'
-port = '8389'
+port = '12389'
 host = 'localhost:' + port
 rootdn = 'dc=at'
 admindn = 'cn=admin,dc=at'

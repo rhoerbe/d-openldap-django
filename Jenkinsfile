@@ -2,25 +2,17 @@ pipeline {
     agent any
     environment {
         compose_cfg='docker-compose.yaml'
-        compose_f_opt=''
-        container='openldap_pv'
+        container='openldap_django'
         d_containers="${container} dc_${container}_run_1"
         d_volumes="${container}.etc_openldap ${container}.var_db"
-        network='dfrontend'
-        service='openldap_pv'
+        service='openldap_django'
     }
     options { disableConcurrentBuilds() }
     stages {
         stage('Config ') {
             steps {
                 sh '''#!/bin/bash -e
-                    echo "using ${compose_cfg} as docker-compose config file"
-                    if [[ "$DOCKER_REGISTRY_USER" ]]; then
-                        echo "  Docker registry user: $DOCKER_REGISTRY_USER"
-                        ./dcshell/update_config.sh "${compose_cfg}.default" $compose_cfg
-                    else
-                        cp "${compose_cfg}.default" $compose_cfg
-                    fi
+                    cp "${compose_cfg}.default" $compose_cfg
                     egrep '( image:| container_name:)' $compose_cfg || echo "missing keys in ${compose_cfg}"
                 '''
             }
@@ -39,22 +31,19 @@ pipeline {
                 sh '''#!/bin/bash -e
                     source ./jenkins_scripts.sh
                     remove_container_if_not_running
-                    [[ "$nocache" ]] && nocacheopt='-c' && echo 'build with option nocache'
-                    docker-compose build $nocacheopt
+                    docker-compose build
                 '''
             }
         }
         stage('Test: setup') {
             steps {
                 sh '''#!/bin/bash -e
-                    source ./jenkins_scripts.sh
-                    create_docker_network
-                    echo "initialize persistent data"
                     nottyopt=''; [[ -t 0 ]] || nottyopt='-T'  # autodetect tty
                     docker-compose -p 'dc' run $nottyopt --rm $service /tests/init_rootpw.sh
                     echo "Starting $service"
                     export LOGLEVEL='conns,config,stats,shell'
                     docker-compose --no-ansi up -d
+                    source ./jenkins_scripts.sh
                     wait_for_container_up && echo "$service started"
                 '''
             }

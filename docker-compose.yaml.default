@@ -8,16 +8,14 @@ services:
     hostname: openldap_django
     environment:
       ROOTPW: changeit
-      USERNAME: slapd
-      SLAPDHOST: 0.0.0.0
       LOGLEVEL:
     #ports:
-    #  - target: 8389
-    #    published: 8389
+    #  - target: 12389
+    #    published: 12389
     #    mode: host
     volumes:
-      - openldap_pv.etc_openldap:/etc/openldap:Z
-      - openldap_pv.var_db:/var/db:Z
+      - openldap_django.etc_openldap:/etc/openldap:Z
+      - openldap_django.var_db:/var/db:Z
 volumes:
     openldap_django.etc_openldap:
       name: openldap_django.etc_openldap

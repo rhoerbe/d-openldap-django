@@ -3,10 +3,9 @@ FROM  centos:7
 RUN yum -y update \
  && yum -y install curl iproute lsof net-tools \
  && yum -y install https://centos7.iuscommunity.org/ius-release.rpm \
- && yum -y install python36u python36u-pip \
- && ln -s /usr/bin/python3.6 /usr/bin/python3 \
- && ln -s /usr/bin/pip3.6 /usr/bin/pip3 \
  && yum -y install openldap openldap-servers openldap-clients \
+ && yum -y install gcc python36u-devel python36u-pip openldap-devel \
+ && pip3.6 install --upgrade pip \
  && yum clean all
 
 # OpenLDAP: Extend configuration, prepare tests
@@ -24,10 +23,11 @@ VOLUME /etc/openldap/ /var/db/
 
 # Django application
 COPY install/djangoldap /opt/djangoldap
-RUN pip3 install ldap3 virtualenv \
+RUN pip3.6 install virtualenv \
  && mkdir -p /opt/venv \
  && virtualenv --python=/usr/bin/python3.6 /opt/venv/djangoldap \
  && source /opt/venv/djangoldap/bin/activate \
+ && pip install ldap3 \
  && pip install -r /opt/djangoldap/requirements.txt
 COPY install/scripts/* /scripts/
 COPY install/etc/profile.d/pythonenv.sh /etc/profile.d/pythonenv.sh
