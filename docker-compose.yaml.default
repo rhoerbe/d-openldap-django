@@ -1,0 +1,25 @@
+version: "3.4"
+services:
+  openldap_django:
+    build:
+      context: .
+    image: local/openldap_django
+    container_name: openldap_django
+    hostname: openldap_django
+    environment:
+      ROOTPW: changeit
+      USERNAME: slapd
+      SLAPDHOST: 0.0.0.0
+      LOGLEVEL:
+    #ports:
+    #  - target: 8389
+    #    published: 8389
+    #    mode: host
+    volumes:
+      - openldap_pv.etc_openldap:/etc/openldap:Z
+      - openldap_pv.var_db:/var/db:Z
+volumes:
+    openldap_django.etc_openldap:
+      name: openldap_django.etc_openldap
+    openldap_django.var_db:
+      name: openldap_django.var_db
