@@ -3,10 +3,8 @@
 ## Usage
 
 cp docker-compose.yaml.default docker-compose.yaml
-docker-compose up
-
-# wihtin the container now:
-/tests/init_rootpw.sh
-/tests/load_data.sh
-/tests/test_authn.sh
+docker-compose up -d
+docker-compose exec openldap_django openldap_django bash
+# wihtin the container run:
+/tests/test_all.sh
 

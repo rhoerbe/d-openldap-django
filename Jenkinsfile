@@ -38,9 +38,6 @@ pipeline {
         stage('Test: setup') {
             steps {
                 sh '''#!/bin/bash -e
-                    nottyopt=''; [[ -t 0 ]] || nottyopt='-T'  # autodetect tty
-                    docker-compose -p 'dc' run $nottyopt --rm $service /tests/init_rootpw.sh
-                    echo "Starting $service"
                     export LOGLEVEL='conns,config,stats,shell'
                     docker-compose --no-ansi up -d
                     source ./jenkins_scripts.sh

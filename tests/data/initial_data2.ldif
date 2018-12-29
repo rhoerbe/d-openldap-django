@@ -1,0 +1,22 @@
+# ldapadd -h 127.0.0.1 -p $SLAPDPORT -x -D cn=admin,dc=at -w changeit
+
+dn: tstgid=tt1,dc=at
+objectClass: tstPerson
+cn: testero testerossi
+sn: testerossi
+uid: tt@localhost.local
+tstgid: tt1
+
+dn: tstOuId=AT:TEST:3,dc=gv,dc=at
+objectClass: tstOrganisation
+tstOuId: AT:TEST:3
+cn: BM Standard Portal Test
+dc: gv
+o: Bundesministerium f. Standardportal offizielle Tests
+ou: Bundesministerium f. Standardportal offizielle Tests
+tstOuCn: BM f. Stdportal Test
+tstOuVKZ: BMSPT3
+tstScope: public
+tstSource: initial
+tstStatus: active
+

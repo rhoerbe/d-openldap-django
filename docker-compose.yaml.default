@@ -3,12 +3,15 @@ services:
   openldap_django:
     build:
       context: .
+
     image: local/openldap_django
     container_name: openldap_django
     hostname: openldap_django
     environment:
       ROOTPW: changeit
-      LOGLEVEL:
+      SLAPDHOST: "127.0.0.1"
+      SLAPDPORT: "12389"
+      LOGLEVEL: "conns,config,stats,shell"
     #ports:
     #  - target: 12389
     #    published: 12389
