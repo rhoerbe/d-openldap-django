@@ -8,33 +8,3 @@ objectClass: inetOrgPerson
 displayName: LDAP administrator
 sn: administrator
 uid: admin@localhost.local
-
-dn: dc=gv,dc=at
-objectClass: domain
-dc: gv
-
-dn: gvOuId=AT:TEST:1,dc=gv,dc=at
-gvOuId: AT:TEST:1
-objectClass: gvOrganisation
-cn: BM Standard Portal Test
-dc: gv
-o: Bundesministerium f. Standardportal offizielle Tests
-ou: Bundesministerium f. Standardportal offizielle Tests
-gvOuCn: BM f. Stdportal Test
-gvOuVKZ: BMSPT
-gvScope: public
-gvSource: initial
-gvStatus: active
-
-dn: gvGid=AT:B:1:12345,gvOuId=AT:TEST:1,dc=gv,dc=at
-gvGid: AT:B:1:12345
-objectClass: gvOrgPerson
-displayName: User Test
-cn: Test User
-givenName: Test
-sn: User
-uid: test@bmspot.gv.at
-gvScope: public
-gvSource: initial
-gvStatus: active
-

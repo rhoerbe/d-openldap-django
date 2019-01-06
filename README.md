@@ -1,4 +1,6 @@
-# Docker image with Django-ldapdb and local OpenLDAP server     
+# Docker image with Django-ldapdb and local OpenLDAP server  
+
+Reproduce behavior of django-ldapdb   
 
 ## Usage
 

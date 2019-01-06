@@ -37,66 +37,17 @@ def test_tstPerson_update():
     u = tstPerson.objects.get(dn='tstgid=tt1,dc=at')
     assert u.email == 'tt1@localhost.local'
 
+def test_tstPerson2_get_by_attribute():
+    u = tstPerson2.objects.get(tstgid='tt2')
+    assert u.email == 'tt2@localhost.local'
 
-def test_gvOrgPerson_filter_cn():
-    qs = gvOrgPerson.objects.filter(cn='Test User')
-    p = qs[0]
-    assert isinstance(p.cn, str)
-    assert isinstance(p.gvGid, str), f'gvGid is {type(p.gvGid)}'
-    assert p.gvGid == 'AT:B:1:12345'
+def test_tstPerson2_insert():
+    u = tstPerson2(tstgid='tt3')
+    u.email = 'tt3@localhost.local'
+    u.cn = 'testeroni testafari'
+    u.sn = 'testafari'
+    u.uid = 'tt3@localhost.local'
+    u.tstgid = 'tt3'
+    u.tstscope = 'intranet'
+    u.save()
 
-
-def test_gvOrgPerson_filter_dn():
-    qs = gvOrgPerson.objects.filter(dn='gvGid=AT:B:1:12345,gvOuId=AT:TEST:1,dc=gv,dc=at')
-    p = qs[0]
-    assert p.gvGid == 'AT:B:1:12345'
-
-
-def test_gvOrgPerson_filter_gvGid():
-    qs = gvOrgPerson.objects.filter(gvGid='AT:B:1:12345')
-    p = qs[0]
-    assert p.gvGid == 'AT:B:1:12345'
-
-
-def test_gvOrgPerson_get_by_gvGid():
-    p = gvOrgPerson.objects.get(gvGid='AT:B:1:12345')
-    assert p.gvGid == 'AT:B:1:12345'
-
-
-def test_gvOrgPerson_update():
-    p = gvOrgPerson.objects.get(gvGid='AT:B:1:12345')
-    assert p.gvStatus == 'active'
-    p.gvStatus = 'inactive'
-    p.save()
-    p = gvOrgPerson.objects.get(gvGid='AT:B:1:12345')
-    assert p.gvStatus == 'inactive'
-
-
-def test_gvOrganisation_get():
-    o = gvOrganisation.objects.get(gvOuId='AT:TEST:1')
-    assert o.gvStatus == 'active'
-
-
-def test_gvOrganisation_update():
-    o = gvOrganisation.objects.get(gvOuId='AT:TEST:1')
-    assert o.gvStatus == 'active'
-    o.gvStatus = 'inactive'
-    o.save()
-    o = gvOrganisation.objects.get(gvOuId='AT:TEST:1')
-    assert o.gvStatus == 'inactive'
-
-
-def test_gvOrganisation_update():
-    n = gvOrganisation(dn='gvOuId=AT:TEST:2,dc=gv,dc=at', gvOuId='AT:TEST:2')
-    n.cn = 'test'
-    n.dc = 'gv'
-    n.gvOuCn = 'test'
-    n.gvOuVKZ = 'test'
-    n.o = 'test'
-    n.ou = 'test'
-    n.gvScope = 'public'
-    n.gvSource = 'test'
-    n.gvStatus = 'active'
-    n.save()
-    o = gvOrganisation.objects.get(dn='gvOuId=AT:TEST:2,dc=gv,dc=at')
-    assert o.gvScope == 'public'

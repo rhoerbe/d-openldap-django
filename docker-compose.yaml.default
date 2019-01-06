@@ -3,8 +3,7 @@ services:
   openldap_django:
     build:
       context: .
-
-    image: local/openldap_django
+    image: r2h2/openldap_django
     container_name: openldap_django
     hostname: openldap_django
     environment:
@@ -12,10 +11,6 @@ services:
       SLAPDHOST: "127.0.0.1"
       SLAPDPORT: "12389"
       LOGLEVEL: "conns,config,stats,shell"
-    #ports:
-    #  - target: 12389
-    #    published: 12389
-    #    mode: host
     volumes:
       - openldap_django.etc_openldap:/etc/openldap:Z
       - openldap_django.var_db:/var/db:Z
