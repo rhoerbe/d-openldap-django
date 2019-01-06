@@ -68,10 +68,10 @@ class tstPerson(ldapdb.models.Model):
 
     given_name = CharField(db_column='givenName')
     surname = CharField("surname", db_column='sn')
-    cn = CharField(db_column='cn', primary_key=True)
+    cn = CharField(db_column='cn')
     email = CharField(db_column='mail')
     uid = CharField(db_column='uid')
-    tstgid = CharField(db_column='tstgid')
+    tstgid = CharField(db_column='tstgid', primary_key=True)
 
     def __str__(self):
         return self.cn
